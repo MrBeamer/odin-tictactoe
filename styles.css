@@ -1,0 +1,143 @@
+:root {
+  --bg-app: #292e37; /* calculator body */
+  --background-app: #03030e; /* void */
+  --highlight-player1: #00e5cc; /*neon-teal, player 1 highlight color */
+  --text-shadow-player1: rgba(0, 229, 204, 0.45); /* --glow-teal,  */
+  --highlight-player2: #ff2db4; /*neon-pink, player 2 highlight color */
+  --text-shadow-player2: rgba(255, 45, 180, 0.5); /* --glow-pink,  */
+  --score-background: #10103a; /* indigo */
+  --score-label: #5a5a90; /*muted */
+  --highlight-border: #25255a; /*dim */
+  --text-gameState: #d580ff; /* ltpur  */
+  --text-shadow-gameState: rgba(191, 79, 255, 0.6); /* glow-pur  */
+
+  --game-board-field: #0b0b28; /* navy */
+}
+
+html {
+  font-size: 16px;
+}
+
+@font-face {
+  font-family: "Press Start 2P";
+  src:
+    url("./fonts/PressStart2P-Regular.woff2") format("woff2"),
+    url("./fonts/PressStart2P-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: "Press Start 2P";
+  background-color: var(--background-app);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.center-container {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 3px;
+}
+.game-field {
+  /* font-family: "Fredoka", sans-serif; */
+  font-family: "Press Start 2P";
+  text-transform: uppercase;
+  color: white;
+  font-size: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--game-board-field);
+  width: 130px;
+  height: 130px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.game-state {
+  margin-bottom: 30px;
+  font-size: 40px;
+  color: var(--text-gameState);
+  text-shadow: var(--text-shadow-gameState);
+}
+/* Scores */
+.game-scores {
+  width: 100%;
+  max-width: 396px;
+  display: grid;
+  grid-template-columns: 1fr 50px 1fr;
+  gap: 5px;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.game-score-card {
+  border: 2px solid var(--highlight-border);
+  background-color: var(--score-background);
+  padding: 10px 8px;
+}
+
+.score-label {
+  color: var(--score-label);
+  font-size: 0.5rem;
+  margin-top: 3px;
+}
+
+.score-number {
+  font-size: 1.3rem;
+}
+.player1-score-value {
+  color: var(--highlight-player1);
+  text-shadow: 0 0 10px var(--text-shadow-player1);
+}
+.player2-score-value {
+  color: var(--highlight-player2);
+  text-shadow: 0 0 10px var(--text-shadow-player2);
+}
+
+.draw-score-value {
+  color: var(--text-gameState);
+  text-shadow: var(--text-shadow-gameState);
+}
+
+/* Reset Buttons */
+button {
+  padding: 9px 12px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.game-buttons-reset {
+  display: flex;
+  max-width: 396px;
+  width: 100%;
+  gap: 10px;
+}
+
+.game-button-reset-board {
+  background-color: transparent;
+  color: var(--score-label);
+  width: 75%;
+  border: 2px solid var(--highlight-border);
+}
+
+.game-button-reset-all {
+  background-color: transparent;
+  color: var(--score-label);
+  width: 25%;
+  border: 2px solid var(--highlight-border);
+}

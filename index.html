@@ -4,8 +4,49 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tic Tac Toe</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./styles.css" />
     <script src="./script.js" defer></script>
   </head>
-  <body></body>
+  <body>
+    <div class="center-container">
+      <div class="game-state"><p>Michael make your move</p></div>
+      <div class="game-grid">
+        <div class="game-field" data-index="0">0</div>
+        <div class="game-field" data-index="1">1</div>
+        <div class="game-field" data-index="2">2</div>
+        <div class="game-field" data-index="3">3</div>
+        <div class="game-field" data-index="4">4</div>
+        <div class="game-field" data-index="5">5</div>
+        <div class="game-field" data-index="6">6</div>
+        <div class="game-field" data-index="7">7</div>
+        <div class="game-field" data-index="8">8</div>
+      </div>
+      <div class="game-scores">
+        <div class="game-score-card">
+          <p class="player1-score-value score-number">0</p>
+          <p class="player1-name score-label">Player1</p>
+        </div>
+        <div class="game-score-card">
+          <p class="draw-score-value score-number">0</p>
+          <p class="score-name score-label">Draw</p>
+        </div>
+        <div class="game-score-card">
+          <p class="player2-score-value score-number">0</p>
+          <p class="player2-name score-label">Player2</p>
+        </div>
+      </div>
+      <div class="game-buttons-reset">
+        <button class="game-button-reset-board game-button-primary">
+          Reset Board
+        </button>
+        <button class="game-button-reset-all game-button-secondary">
+          Reset All
+        </button>
+      </div>
+    </div>
+  </body>
 </html>
