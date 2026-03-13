@@ -76,6 +76,7 @@ const displayController = (() => {
     gameBoardStateMessage.textContent = message;
   };
 
+  //Highlights player marker card, in actives players color
   const highlightActivePlayer = (activePlayer, player1) => {
     const player1Card = document.querySelector(".player1-card ");
     const player2Card = document.querySelector(".player2-card ");
@@ -88,6 +89,15 @@ const displayController = (() => {
     }
   };
 
+  //Highlights clicked field, in actives players color
+  const highlightActivePlayerField = (field, activePlayer) => {
+    if (activePlayer.marker === "x") {
+      field.classList.add("active-player1");
+    } else {
+      field.classList.add("active-player2");
+    }
+  };
+
   const upDateScore = (score) => {
     console.log(score);
     player1Score.textContent = score.player1;
@@ -96,9 +106,9 @@ const displayController = (() => {
   };
   const gameBoardReset = () => {
     const gameFieldsList = document.querySelectorAll(".game-field");
-    // Replace the element with a fresh clone of itself
 
     gameFieldsList.forEach((field) => {
+      // Replace the element with a fresh clone of itself
       const fresh = field.cloneNode(false); // false = no children
       field.parentNode.replaceChild(fresh, field);
     });
@@ -115,6 +125,8 @@ const displayController = (() => {
     const fieldIndex = event.target.dataset.index;
     const gameBoardField = event.target.closest(".game-field");
     const activePlayer = gameController.getActivePlayer();
+    highlightActivePlayerField(gameBoardField, activePlayer);
+
     if (gameController.playTurn(fieldIndex)) {
       console.log("Field index: " + fieldIndex);
       if (gameBoardField) {

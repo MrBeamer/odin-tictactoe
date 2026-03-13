@@ -6,6 +6,7 @@
   --highlight-player2: #ff2db4; /*neon-pink, player 2 highlight color */
   --text-shadow-player2: rgba(255, 45, 180, 0.5); /* --glow-pink,  */
   --score-background: #10103a; /* indigo */
+  --indigo: #10103a; /* indigo */
   --label: #5a5a90; /*muted */
   --highlight-border: #25255a; /*dim */
   --text-gameState: #d580ff; /* ltpur  */
@@ -52,6 +53,21 @@ body {
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+  padding: 9px 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition:
+    transform 0.07s,
+    box-shadow 0.07s;
+}
+
+a:hover {
+  filter: brightness(1.2);
+}
+
 .center-container {
   min-height: 100dvh;
   display: flex;
@@ -62,6 +78,49 @@ body {
   z-index: 0;
 }
 
+/* Form */
+.game-menu {
+  font-size: 12px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-menu-title {
+  text-align: center;
+  margin-bottom: 20px;
+
+  h1 {
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    margin-top: 30px;
+  }
+}
+
+label {
+  font-size: 0.5rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+  background: var(--indigo);
+  border: 2px solid var(--dim);
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+input {
+  background-color: transparent;
+  color: var(--white);
+}
+
+.button-game-start {
+  margin-top: 20px;
+}
 /* Game navigation */
 
 .game-navigation {
@@ -85,8 +144,9 @@ body {
 }
 
 .button-game-menu {
-  font-size: 0.7rem;
-  padding: 4px 2px;
+  text-align: center;
+  font-size: 0.6rem;
+  padding: 4px 8px;
   background-color: transparent;
   color: var(--label);
   width: 70px;
@@ -143,7 +203,8 @@ body {
   color: var(--white);
 }
 
-.player-card.active-player1 {
+.player-card.active-player1,
+.game-field.active-player1 {
   /* when active highlight card */
   color: var(--highlight-player1);
   border: 2px solid var(--highlight-player1);
@@ -152,7 +213,8 @@ body {
     inset 0 0 10px rgba(0, 229, 204, 0.07);
   background: #051a18;
 }
-.player-card.active-player2 {
+.player-card.active-player2,
+.game-field.active-player2 {
   /* when active highlight card */
   background-color: #1f0518;
   border: 2px solid var(--highlight-player2);
@@ -267,6 +329,7 @@ button:hover {
 }
 
 .game-button-reset-all {
+  font-size: 0.8rem;
   background-color: transparent;
   color: var(--label);
   width: 25%;

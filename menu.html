@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic Tac Toe</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./form.js" defer></script>
+  </head>
+  <body>
+    <div class="center-container">
+      <div class="game-menu">
+        <div class="game-menu-title">
+          <h1>Tic Tac Toe</h1>
+          <span>Arcade Edition</span>
+          <h2>ENTER PLAYER NAMES</h2>
+        </div>
+        <form action="./index.html" method="get" class="game-form">
+          <div class="form-field">
+            <label for="player1-name">Player 1 - Plays as X</label>
+            <input
+              type="text"
+              name="player1Name"
+              id="player1-name"
+              minlength="1"
+              maxlength="30"
+              required
+            />
+          </div>
+          <div class="form-field">
+            <label for="player2-name">Player 2 - Plays as O</label>
+            <input
+              type="text"
+              name="player2Name"
+              id="player2-name"
+              minlength="1"
+              maxlength="30"
+              required
+            />
+          </div>
+          <button class="button-game-start" type="submit">Start Game</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
