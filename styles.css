@@ -6,12 +6,24 @@
   --highlight-player2: #ff2db4; /*neon-pink, player 2 highlight color */
   --text-shadow-player2: rgba(255, 45, 180, 0.5); /* --glow-pink,  */
   --score-background: #10103a; /* indigo */
-  --score-label: #5a5a90; /*muted */
+  --label: #5a5a90; /*muted */
   --highlight-border: #25255a; /*dim */
   --text-gameState: #d580ff; /* ltpur  */
   --text-shadow-gameState: rgba(191, 79, 255, 0.6); /* glow-pur  */
 
   --game-board-field: #0b0b28; /* navy */
+  --neon-purple: #bf4fff;
+  --neon-pink: #ff2db4;
+  --neon-teal: #00e5cc;
+  --neon-blue: #3d6fff;
+  --neon-orange: #ff7b00;
+  --glow-pur: rgba(191, 79, 255, 0.6);
+  --glow-pink: rgba(255, 45, 180, 0.5);
+  --glow-teal: rgba(0, 229, 204, 0.45);
+  --glow-blue: rgba(61, 111, 255, 0.4);
+  --glow-ora: rgba(255, 123, 0, 0.4);
+  --white: #f0eaff;
+  --dim: #25255a;
 }
 
 html {
@@ -31,6 +43,7 @@ html {
 body {
   font-family: "Press Start 2P";
   background-color: var(--background-app);
+  position: relative;
 }
 
 * {
@@ -45,7 +58,42 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
+  z-index: 0;
 }
+
+/* Game navigation */
+
+.game-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 396px;
+  margin-bottom: 15px;
+}
+
+.game-logo {
+  color: var(--white);
+  font-size: 0.7rem;
+  padding: 4px 2px;
+  background: linear-gradient(90deg, var(--neon-teal), var(--neon-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 5px var(--glow-pur));
+}
+
+.button-game-menu {
+  font-size: 0.7rem;
+  padding: 4px 2px;
+  background-color: transparent;
+  color: var(--label);
+  width: 70px;
+  border: 2px solid var(--highlight-border);
+}
+
+/* Game Board */
 
 .game-grid {
   display: grid;
@@ -53,27 +101,97 @@ body {
   gap: 3px;
 }
 .game-field {
+  position: relative;
+  z-index: 1;
   /* font-family: "Fredoka", sans-serif; */
   font-family: "Press Start 2P";
   text-transform: uppercase;
   color: white;
-  font-size: 50px;
+  font-size: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: var(--game-board-field);
   width: 130px;
   height: 130px;
-  border-radius: 10px;
+  border-radius: 2px;
   cursor: pointer;
+  border: 2px solid var(--highlight-border);
+}
+
+.game-field:hover {
+  border: 1px solid var(--neon-purple);
+  background-color: #be4fff19;
 }
 
 .game-state {
+  margin-top: 15px;
   margin-bottom: 30px;
-  font-size: 40px;
+  text-align: center;
+  font-size: 0.6rem;
   color: var(--text-gameState);
   text-shadow: var(--text-shadow-gameState);
 }
+
+/* Active player */
+
+.active-player-cards {
+  display: grid;
+  grid-template-columns: 1fr 50px 1fr;
+  width: 100%;
+  max-width: 396px;
+  color: var(--white);
+}
+
+.player-card.active-player1 {
+  /* when active highlight card */
+  color: var(--highlight-player1);
+  border: 2px solid var(--highlight-player1);
+  box-shadow:
+    0 0 14px var(--glow-teal),
+    inset 0 0 10px rgba(0, 229, 204, 0.07);
+  background: #051a18;
+}
+.player-card.active-player2 {
+  /* when active highlight card */
+  background-color: #1f0518;
+  border: 2px solid var(--highlight-player2);
+  color: var(--highlight-player2);
+  box-shadow:
+    0 0 14px var(--glow-pink),
+    inset 0 0 10px rgba(255, 45, 180, 0.07);
+}
+
+.active-player1 .player-label {
+  /* when active highlight card */
+  color: var(--highlight-player1);
+}
+.active-player2 .player-label {
+  /* when active highlight card */
+  color: var(--highlight-player2);
+}
+
+.player-card {
+  text-align: center;
+}
+
+.player-marker {
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.player-label {
+  font-size: 0.5rem;
+  color: var(--label);
+}
+
+.game-verus-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.7rem;
+}
+
 /* Scores */
 .game-scores {
   width: 100%;
@@ -86,14 +204,15 @@ body {
   margin-bottom: 15px;
 }
 
-.game-score-card {
+.game-score-card,
+.player-card {
   border: 2px solid var(--highlight-border);
   background-color: var(--score-background);
   padding: 10px 8px;
 }
 
 .score-label {
-  color: var(--score-label);
+  color: var(--label);
   font-size: 0.5rem;
   margin-top: 3px;
 }
@@ -120,7 +239,15 @@ button {
   padding: 9px 12px;
   font-size: 1rem;
   cursor: pointer;
+  text-transform: uppercase;
+  transition:
+    transform 0.07s,
+    box-shadow 0.07s;
 }
+button:hover {
+  filter: brightness(1.2);
+}
+
 .game-buttons-reset {
   display: flex;
   max-width: 396px;
@@ -129,15 +256,39 @@ button {
 }
 
 .game-button-reset-board {
-  background-color: transparent;
-  color: var(--score-label);
+  background: linear-gradient(90deg, #3d6fff, #bf4fff, #ff2db4);
+  color: var(--background-app);
+  padding: 11px 10px;
+  box-shadow:
+    0 4px 0 #1a0057,
+    0 0 16px var(--glow-blue);
   width: 75%;
   border: 2px solid var(--highlight-border);
 }
 
 .game-button-reset-all {
   background-color: transparent;
-  color: var(--score-label);
+  color: var(--label);
   width: 25%;
   border: 2px solid var(--highlight-border);
+}
+
+.scanlines {
+  position: relative; /* anchor for the pseudo-element */
+  overflow: hidden; /* keeps it clipped to the container */
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0; /* covers the full container */
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0px,
+    transparent 3px,
+    rgba(0, 0, 0, 0.25) 3px,
+    rgba(0, 0, 0, 0.25) 4px
+  );
+  pointer-events: none; /* clicks still work on children */
+  z-index: 9999; /* sits above all child elements */
 }
