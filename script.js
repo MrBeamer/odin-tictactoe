@@ -1,5 +1,4 @@
 // Bug: last turn if board is full and one player would win its a tie and shows tie message
-// Bug: switches player when game is finish
 const gameboard = (() => {
   // Empty strings in the array to replace them through index with a player marker
   let gameboard = ["", "", "", "", "", "", "", "", ""];
@@ -35,9 +34,6 @@ const gameboard = (() => {
       return gameboard[element] === activeMarker;
     };
     for (const condition of winningConditions) {
-      if (playedRounds === 9 && !gameboard.includes("")) {
-        return "tie";
-      }
       if (condition.every(checkForEquals)) {
         console.log(condition.every(checkForEquals));
         if (activeMarker === "x") {
@@ -46,6 +42,12 @@ const gameboard = (() => {
           return "win";
         }
       }
+    }
+    // if (playedRounds === 9 && !gameboard.includes("")) {
+    //   return "tie";
+    // }
+    if (playedRounds === 9) {
+      return "tie";
     }
   };
 
@@ -135,12 +137,14 @@ const displayController = (() => {
   //Highlights clicked field, in actives players color
   const highlightActivePlayerField = (field, activePlayer) => {
     // Makes sure that no field can be highlighted after the game finished
-    if (!gameController.getIsGameOver())
-      if (activePlayer.marker === "x") {
-        field.classList.add("active-player1");
-      } else {
-        field.classList.add("active-player2");
-      }
+    if (gameController.getIsGameOver()) return;
+    // Safeguard against overwriting players highlighted field
+    if (field.classList.contains("active-player1", "active-player2")) return;
+    if (activePlayer.marker === "x") {
+      field.classList.add("active-player1");
+    } else {
+      field.classList.add("active-player2");
+    }
   };
 
   // Updates the Scoreboard
