@@ -1,4 +1,4 @@
-// Bug: last turn if board is full and one player would win its a tie and shows tie message
+//Bug if reset all last player card highlighted is wrong
 const gameboard = (() => {
   // Empty strings in the array to replace them through index with a player marker
   let gameboard = ["", "", "", "", "", "", "", "", ""];

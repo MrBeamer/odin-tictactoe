@@ -465,3 +465,23 @@ body::after {
     max-width: 351px;
   }
 }
+@media (max-width: 390px) {
+  .game-menu {
+    max-width: 335px;
+    h1 {
+      letter-spacing: 0em;
+    }
+  }
+
+  .game-field {
+    width: 110px;
+    height: 110px;
+  }
+
+  .game-navigation,
+  .game-scores,
+  .active-player-cards,
+  .game-buttons-reset {
+    max-width: 336px;
+  }
+}
