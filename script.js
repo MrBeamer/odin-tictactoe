@@ -28,7 +28,6 @@ const gameboard = (() => {
 
   const checkBoardForWinner = (activeMarker) => {
     const playedRounds = gameController.getPlayedRounds();
-    console.log(gameboard);
     //Callback function for every, checks if player mark matches with a winning pattern
     const checkForEquals = (element) => {
       return gameboard[element] === activeMarker;
@@ -149,7 +148,6 @@ const displayController = (() => {
 
   // Updates the Scoreboard
   const upDateScore = (score) => {
-    console.log(score);
     player1Score.textContent = score.player1;
     player2Score.textContent = score.player2;
     drawScore.textContent = score.draw;
@@ -183,7 +181,6 @@ const displayController = (() => {
     highlightActivePlayerField(gameBoardField, activePlayer);
 
     if (gameController.playTurn(fieldIndex)) {
-      console.log("Field index: " + fieldIndex);
       if (gameBoardField) {
         gameBoardField.textContent = activePlayer.marker;
       }
@@ -312,7 +309,6 @@ const gameController = (() => {
     setPlayedRounds();
     declareWinner();
     trackPlayerTurns();
-    console.log(getPlayedRounds());
     return true;
   };
 
