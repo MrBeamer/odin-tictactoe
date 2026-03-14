@@ -136,6 +136,7 @@ label {
     box-shadow 0.15s;
 }
 input {
+  font-size: 1rem;
   background-color: transparent;
   color: var(--white);
   border: none;
