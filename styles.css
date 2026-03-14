@@ -448,3 +448,20 @@ body::after {
   pointer-events: none; /* clicks still work on children */
   z-index: 9999; /* sits above all child elements */
 }
+/* Media queries */
+@media (max-width: 435px) {
+  .game-menu {
+    max-width: 355px;
+  }
+  .game-field {
+    width: 115px;
+    height: 115px;
+  }
+
+  .game-navigation,
+  .game-scores,
+  .active-player-cards,
+  .game-buttons-reset {
+    max-width: 351px;
+  }
+}
