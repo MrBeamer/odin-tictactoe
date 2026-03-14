@@ -12,56 +12,96 @@
     <script src="./script.js" defer></script>
   </head>
   <body>
-    <div class="center-container">
-      <nav class="game-navigation">
-        <span class="game-logo">TTT</span>
-        <a class="button-game-menu" href="./menu.html">Menu</a>
-      </nav>
-      <div class="active-player-cards">
-        <div class="player1-card player-card">
-          <p class="player1-marker player-marker">X</p>
-          <p class="player1-label player-label">P1</p>
-        </div>
-        <div class="game-verus-label"><p>VS</p></div>
-        <div class="player2-card player-card">
-          <p class="player2-marker player-marker">O</p>
-          <p class="player2-label player-label">P2</p>
-        </div>
-      </div>
-      <div class="game-state"><p>Michael make your move</p></div>
-      <div class="game-grid">
-        <div class="game-field" data-index="0"></div>
-        <div class="game-field" data-index="1"></div>
-        <div class="game-field" data-index="2"></div>
-        <div class="game-field" data-index="3"></div>
-        <div class="game-field" data-index="4"></div>
-        <div class="game-field" data-index="5"></div>
-        <div class="game-field" data-index="6"></div>
-        <div class="game-field" data-index="7"></div>
-        <div class="game-field" data-index="8"></div>
-      </div>
-      <div class="game-scores">
-        <div class="game-score-card">
-          <p class="player1-score-value score-number">0</p>
-          <p class="player1-name score-label">Player1</p>
-        </div>
-        <div class="game-score-card">
-          <p class="draw-score-value score-number">0</p>
-          <p class="score-name score-label">Draw</p>
-        </div>
-        <div class="game-score-card">
-          <p class="player2-score-value score-number">0</p>
-          <p class="player2-name score-label">Player2</p>
+    <section id="game-menu-screen">
+      <div class="center-container">
+        <div class="game-menu">
+          <div class="game-menu-title">
+            <h1>Tic Tac Toe</h1>
+            <h2>Arcade Edition</h2>
+            <h3>ENTER PLAYER NAMES</h3>
+          </div>
+          <form action="./index.html" method="get" class="game-form">
+            <div class="form-field">
+              <label for="player1-name">Player 1 - Plays as X</label>
+              <input
+                type="text"
+                name="player1Name"
+                id="player1-name"
+                minlength="1"
+                maxlength="15"
+                required
+                placeholder="Enter name"
+              />
+            </div>
+            <div class="form-field">
+              <label for="player2-name">Player 2 - Plays as O</label>
+              <input
+                type="text"
+                name="player2Name"
+                id="player2-name"
+                minlength="1"
+                maxlength="15"
+                required
+                placeholder="Enter name"
+              />
+            </div>
+            <button class="button-game-start" type="submit">Start Game</button>
+          </form>
         </div>
       </div>
-      <div class="game-buttons-reset">
-        <button class="game-button-reset-board game-button-primary">
-          Reset Board
-        </button>
-        <button class="game-button-reset-all game-button-secondary">
-          Reset All
-        </button>
+    </section>
+    <section class="hidden" id="game-screen">
+      <div class="center-container" id="game-screen">
+        <nav class="game-navigation">
+          <span class="game-logo">TTT</span>
+          <button class="button-game-menu">Menu</button>
+        </nav>
+        <div class="active-player-cards">
+          <div class="player1-card player-card">
+            <p class="player1-marker player-marker">X</p>
+            <p class="player1-label player-label">P1</p>
+          </div>
+          <div class="game-verus-label"><p>VS</p></div>
+          <div class="player2-card player-card">
+            <p class="player2-marker player-marker">O</p>
+            <p class="player2-label player-label">P2</p>
+          </div>
+        </div>
+        <div class="game-state"><p>Michael make your move</p></div>
+        <div class="game-grid">
+          <div class="game-field" data-index="0"></div>
+          <div class="game-field" data-index="1"></div>
+          <div class="game-field" data-index="2"></div>
+          <div class="game-field" data-index="3"></div>
+          <div class="game-field" data-index="4"></div>
+          <div class="game-field" data-index="5"></div>
+          <div class="game-field" data-index="6"></div>
+          <div class="game-field" data-index="7"></div>
+          <div class="game-field" data-index="8"></div>
+        </div>
+        <div class="game-scores">
+          <div class="game-score-card">
+            <p class="player1-score-value score-number">0</p>
+            <p class="player1-name score-label">Player1</p>
+          </div>
+          <div class="game-score-card">
+            <p class="draw-score-value score-number">0</p>
+            <p class="score-name score-label">Draw</p>
+          </div>
+          <div class="game-score-card">
+            <p class="player2-score-value score-number">0</p>
+            <p class="player2-name score-label">Player2</p>
+          </div>
+        </div>
+        <div class="game-buttons-reset">
+          <button class="game-button-reset-board game-button-primary">
+            Reset Board
+          </button>
+          <button class="game-button-reset-all game-button-secondary">
+            Reset All
+          </button>
+        </div>
       </div>
-    </div>
+    </section>
   </body>
 </html>

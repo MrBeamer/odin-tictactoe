@@ -1,10 +1,8 @@
-//bug: last turn if board is full and one player would win its a tie
-// fix that game ending message not displayed
-//
+// Bug: last turn if board is full and one player would win its a tie and shows tie message
+// Bug: switches player when game is finish
 const gameboard = (() => {
   // Empty strings in the array to replace them through index with a player marker
   let gameboard = ["", "", "", "", "", "", "", "", ""];
-  //   let playerMarker = "x";
 
   const winningConditions = [
     [0, 1, 2],
@@ -37,7 +35,7 @@ const gameboard = (() => {
       return gameboard[element] === activeMarker;
     };
     for (const condition of winningConditions) {
-      if (playedRounds === 8 && !gameboard.includes("")) {
+      if (playedRounds === 9 && !gameboard.includes("")) {
         return "tie";
       }
       if (condition.every(checkForEquals)) {
@@ -71,13 +69,58 @@ const displayController = (() => {
   const player1Score = document.querySelector(".player1-score-value");
   const player2Score = document.querySelector(".player2-score-value");
   const drawScore = document.querySelector(".draw-score-value");
+  const btnGameMenu = document.querySelector(".button-game-menu");
+  const btnGameStart = document.querySelector(".game-form");
+  const gameScreen = document.getElementById("game-screen");
+  const gameMenuScreen = document.getElementById("game-menu-screen");
+  const player1Name = document.querySelector(".player1-name");
+  const player2Name = document.querySelector(".player2-name");
+  const player1Label = document.querySelector(".player1-label");
+  const player2Label = document.querySelector(".player2-label");
 
+  // Navigate from Game to Game Menu (by hiding the corresponding one)
+  const toggleGameView = () => {
+    gameMenuScreen.classList.toggle(
+      "hidden",
+      gameScreen.className === "hidden",
+    );
+    gameScreen.classList.toggle(
+      "hidden",
+      gameMenuScreen.className !== "hidden",
+    );
+  };
+
+  btnGameMenu.addEventListener("click", toggleGameView);
+
+  /// Update GameState Message
   const upDateStateMessage = (message) => {
     gameBoardStateMessage.textContent = message;
   };
 
+  const setPlayersGameBoardNames = (playerData) => {
+    player1Name.textContent = playerData.player1Name.toLocaleUpperCase();
+    player2Name.textContent = playerData.player2Name.toLocaleUpperCase();
+    player1Label.textContent = playerData.player1Name.toLocaleUpperCase();
+    player2Label.textContent = playerData.player2Name.toLocaleUpperCase();
+  };
+
+  // Get the Data from the form, hide the game menu on submit and display the gameScreen
+  const getFormData = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const playerData = Object.fromEntries(formData);
+    //Sets the Names in the Player objects of the gameController
+    upDateStateMessage(`${playerData.player1Name.toLocaleUpperCase()}'s turn`);
+    setPlayersGameBoardNames(playerData);
+    gameController.setPlayerNames(playerData);
+    toggleGameView();
+  };
+  btnGameStart.addEventListener("submit", getFormData);
+
   //Highlights player marker card, in actives players color
   const highlightActivePlayer = (activePlayer, player1) => {
+    // Stops playerCard highlight switch when the game is over
+    if (gameController.getIsGameOver()) return;
     const player1Card = document.querySelector(".player1-card ");
     const player2Card = document.querySelector(".player2-card ");
     if (activePlayer === player1) {
@@ -91,30 +134,37 @@ const displayController = (() => {
 
   //Highlights clicked field, in actives players color
   const highlightActivePlayerField = (field, activePlayer) => {
-    if (activePlayer.marker === "x") {
-      field.classList.add("active-player1");
-    } else {
-      field.classList.add("active-player2");
-    }
+    // Makes sure that no field can be highlighted after the game finished
+    if (!gameController.getIsGameOver())
+      if (activePlayer.marker === "x") {
+        field.classList.add("active-player1");
+      } else {
+        field.classList.add("active-player2");
+      }
   };
 
+  // Updates the Scoreboard
   const upDateScore = (score) => {
     console.log(score);
     player1Score.textContent = score.player1;
     player2Score.textContent = score.player2;
     drawScore.textContent = score.draw;
   };
-  const gameBoardReset = () => {
+
+  // Reset gameBoard and state message
+  const gameBoardReset = (player1Name) => {
     const gameFieldsList = document.querySelectorAll(".game-field");
 
     gameFieldsList.forEach((field) => {
       // Replace the element with a fresh clone of itself
       const fresh = field.cloneNode(false); // false = no children
+      fresh.classList.remove("active-player2", "active-player1");
       field.parentNode.replaceChild(fresh, field);
     });
-    gameBoardStateMessage.textContent = "Enter your names";
+    gameBoardStateMessage.textContent = `${player1Name}'s turn`;
   };
 
+  // Reset the Scoreboard
   const scoreReset = () => {
     player1Score.textContent = 0;
     player2Score.textContent = 0;
@@ -122,6 +172,7 @@ const displayController = (() => {
   };
 
   const getFieldIndex = (event) => {
+    if (!event.target.classList.contains("game-field")) return;
     const fieldIndex = event.target.dataset.index;
     const gameBoardField = event.target.closest(".game-field");
     const activePlayer = gameController.getActivePlayer();
@@ -144,7 +195,7 @@ const displayController = (() => {
     highlightActivePlayer,
   };
 })();
-
+/////////////////////////////////////////////
 const gameController = (() => {
   const player1 = createPlayer("Michael", "x");
   const player2 = createPlayer("Ann", "o");
@@ -157,6 +208,11 @@ const gameController = (() => {
     draw: 0,
   };
 
+  const setPlayerNames = (playerData) => {
+    player1.name = playerData.player1Name.toLocaleUpperCase();
+    player2.name = playerData.player2Name.toLocaleUpperCase();
+  };
+
   const getActivePlayer = () => {
     return activePlayer;
   };
@@ -165,14 +221,11 @@ const gameController = (() => {
     activePlayer.marker === "x"
       ? (activePlayer = player2)
       : (activePlayer = player1);
-    console.log("Current Marker: " + activePlayer.marker);
     //Highlights active player card
     displayController.highlightActivePlayer(activePlayer, player1);
     if (!isGameOver || playedRounds > 9) {
       //Updates GameState based on which players turn is
-      displayController.upDateStateMessage(
-        `${activePlayer.name} make your move`,
-      );
+      displayController.upDateStateMessage(`${activePlayer.name}'s turn`);
     }
   };
 
@@ -199,7 +252,7 @@ const gameController = (() => {
     playedRounds = 0;
     activePlayer = player1;
     gameboard.reset();
-    displayController.gameBoardReset();
+    displayController.gameBoardReset(player1.name);
   };
 
   const btnResetBoard = document.querySelector(".game-button-reset-board");
@@ -252,9 +305,9 @@ const gameController = (() => {
       return;
     }
     gameboard.setPlayerMarkerInArray(activePlayer.marker, fieldIndex);
+    setPlayedRounds();
     declareWinner();
     trackPlayerTurns();
-    setPlayedRounds();
     console.log(getPlayedRounds());
     return true;
   };
@@ -266,5 +319,6 @@ const gameController = (() => {
     getPlayedRounds,
     playTurn,
     getActivePlayer,
+    setPlayerNames,
   };
 })();
