@@ -1,4 +1,6 @@
 //Bug if reset all last player card highlighted is wrong
+// Missing initial player one highlighted
+// Missing reset of last highlighted player
 const gameboard = (() => {
   // Empty strings in the array to replace them through index with a player marker
   let gameboard = ["", "", "", "", "", "", "", "", ""];
@@ -42,9 +44,6 @@ const gameboard = (() => {
         }
       }
     }
-    // if (playedRounds === 9 && !gameboard.includes("")) {
-    //   return "tie";
-    // }
     if (playedRounds === 9) {
       return "tie";
     }
@@ -110,10 +109,13 @@ const displayController = (() => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const playerData = Object.fromEntries(formData);
+    //put all these in initialize function
     //Sets the Names in the Player objects of the gameController
     upDateStateMessage(`${playerData.player1Name.toLocaleUpperCase()}'s turn`);
     setPlayersGameBoardNames(playerData);
     gameController.setPlayerNames(playerData);
+    highlightActivePlayer();
+    // gameController.initialize()
     toggleGameView();
   };
   btnGameStart.addEventListener("submit", getFormData);
@@ -252,6 +254,8 @@ const gameController = (() => {
     isGameOver = false;
     playedRounds = 0;
     activePlayer = player1;
+    //resets active player card
+    displayController.highlightActivePlayer(activePlayer, player1);
     gameboard.reset();
     displayController.gameBoardReset(player1.name);
   };
@@ -312,6 +316,10 @@ const gameController = (() => {
     return true;
   };
 
+  const initialize = () => {
+    displayController.highlightActivePlayer(activePlayer, player1);
+  };
+
   return {
     setIsGameOver,
     getIsGameOver,
@@ -320,5 +328,7 @@ const gameController = (() => {
     playTurn,
     getActivePlayer,
     setPlayerNames,
+    initialize,
   };
 })();
+gameController.initialize();
